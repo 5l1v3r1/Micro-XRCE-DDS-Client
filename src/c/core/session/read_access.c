@@ -165,8 +165,11 @@ inline void read_format_data(
                 ucdrBuffer temp_buffer;
 
                 ucdr_init_buffer(&temp_buffer, ub->iterator, length);
+                temp_buffer.on_full_buffer = ub->on_bull_buffer;
+                temp_buffer.args = ub->args;
                 session->on_topic(session, object_id, request_id, stream_id, &temp_buffer, session->on_topic_args);
-                ub->iterator += length;
+                ucdr_advance_buffer(ub, length);
+//                ub->iterator += length;
             }
             break;
         }
